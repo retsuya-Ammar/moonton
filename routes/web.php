@@ -14,18 +14,16 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::redirect('/', '/prototype/login');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::prefix('prototype')->group(function () {
+    route::get('/login', function () {
+        return Inertia::render('Prototype/Login');
+    });
+});
 
 require __DIR__.'/auth.php';
